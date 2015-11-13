@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'generators/interface_generator.rb'
+InterfaceGenerator.start

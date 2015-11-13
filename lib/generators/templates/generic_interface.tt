@@ -1,0 +1,8 @@
+require 'interface/interface'
+module <%= @name %>
+  include Interface
+
+  def initialize
+    must_implement <%= @methods %>
+  end
+end
