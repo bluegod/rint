@@ -24,7 +24,7 @@ end
 Instrument.new #will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
 ```
 
-You can also especify the method's arity:
+You can also specify the method's arity:
 
 ```ruby
 require 'interface'
