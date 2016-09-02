@@ -16,12 +16,31 @@ module Playable
   end
 end
 
-require 'playable' 
-class Instrument 
+require 'playable'
+class Instrument
   implements Playable
 end
 
 Instrument.new #will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
+```
+
+You can also especify the method's arity:
+
+```ruby
+require 'interface'
+module Playable
+  include Interface
+
+  def initialize
+    must_implement_with_arity({play: 2, play_quietly: 0})
+  end
+end
+
+class Instrument
+  implements Playable
+end
+
+Instrument.new # will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play/2 for interface Playable
 ```
 
 There is also a CLI to generate the interfaces from the command line:
@@ -36,7 +55,7 @@ Add it to your Gemfile:
 
 gem 'rint'
 
-and run 
+and run
 
 ```sh
 $ bundle install
@@ -44,9 +63,9 @@ $ bundle install
 
 ### Goals
 
-Duck typing can be evil if not used correctly. While Ruby applications can get a good level of confidence about issues arisen by duck typing, the fear of a method missing exception or constant changes to a class may lead the developer to use safety checks such as respond_to? or raise Errors when a method is missing. 
+Duck typing can be evil if not used correctly. While Ruby applications can get a good level of confidence about issues arisen by duck typing, the fear of a method missing exception or constant changes to a class may lead the developer to use safety checks such as respond_to? or raise Errors when a method is missing.
 
-This implementation of rint wraps what other static languages use and encapsulates the safety check in a common place, also making explicit the behaviour through the word "implements" and expecting the developer to guess the behaviour of a class without looking at docs or partially implemented code. 
+This implementation of rint wraps what other static languages use and encapsulates the safety check in a common place, also making explicit the behaviour through the word "implements" and expecting the developer to guess the behaviour of a class without looking at docs or partially implemented code.
 
 It also provides a centralised way to implement the interface pattern without having the code throwing an error in a hidden method.
 
