@@ -1,22 +1,46 @@
 require 'spec_helper'
-require 'support/test_interface'
 require 'support/test_implementation'
-require 'support/test_implementation_one'
-require 'support/test_implementation_two'
+require 'support/test_cases'
 require 'interface'
 require 'interface/error/not_implemented_error'
 require 'core_ext/module'
 
 describe Interface do
-  it 'raises an error if the methods are not implemented' do
-    expect { TestImplementation.new }.to raise_error(Interface::Error::NotImplementedError)
+  describe '#must_implement' do
+    context "whit none method implemented" do
+      it "raise method not implemented error from interface" do
+        expect { TestImplementation.new }.to raise_error(Interface::Error::NotImplementedError)
+      end
+    end
+
+    context "whit only one right method implemented" do
+      before { TestImplementation.include(MissingOneMethod) }
+
+      it "raise method not implemented error from interface" do
+        expect { TestImplementation.new }.to raise_error(Interface::Error::NotImplementedError)
+      end
+    end
+
+    context "whit right method implemented" do
+      before { TestImplementation.include(RightArity) }
+
+      it "doesn't raise error" do
+        expect{ TestImplementation.new }.not_to raise_error
+      end
+    end
+
+    context "whit wright methods but wrong arity implemented" do
+      before { TestImplementation.include(WrongArity) }
+
+      it "raise method not implemented error from interface" do
+        expect { TestImplementation.new }.to raise_error(Interface::Error::NotImplementedError)
+      end
+    end
   end
 
-  it 'raises an error if one of the methods is not implemented' do
-    expect { TestImplementationOne.new }.to raise_error(Interface::Error::NotImplementedError)
-  end
-
-  it 'does not raise an error if the methods are implemented' do
-    expect { TestImplementationTwo.new }.to raise_error(Interface::Error::NotImplementedError)
+  describe "#error_message" do
+    it "displays method name '/' arity" do
+      expect { TestImplementation.new }.to raise_error(/hello_world\/0/)
+    end
   end
 end
