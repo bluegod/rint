@@ -7,13 +7,13 @@ require 'core_ext/module'
 
 describe Interface do
   describe '#must_implement' do
-    context "whit none method implemented" do
+    context "when none method implemented" do
       it "raise method not implemented error from interface" do
         expect { TestImplementation.new }.to raise_error(Interface::Error::NotImplementedError)
       end
     end
 
-    context "whit only one right method implemented" do
+    context "when only one right method implemented" do
       before { TestImplementation.include(MissingOneMethod) }
 
       it "raise method not implemented error from interface" do
@@ -21,15 +21,25 @@ describe Interface do
       end
     end
 
-    context "whit right method implemented" do
+    context "when right methods implemented" do
       before { TestImplementation.include(RightArity) }
 
       it "doesn't raise error" do
+        puts TestImplementation.instance_methods.include? :hello_world
         expect{ TestImplementation.new }.not_to raise_error
       end
     end
 
-    context "whit wright methods but wrong arity implemented" do
+    context "when implemented with unlimited arguments in a method where isn't specified /
+            the number of arguments" do
+      before { TestImplementation.include(AcceptUnlimitedArgs) }
+
+      it "should accept and not raise method not raise error" do
+        expect { TestImplementation.new }.not_to raise_error
+      end
+    end
+
+    context "when wright methods but wrong arity implemented" do
       before { TestImplementation.include(WrongArity) }
 
       it "raise method not implemented error from interface" do
@@ -39,8 +49,12 @@ describe Interface do
   end
 
   describe "#error_message" do
-    it "displays method name '/' arity" do
-      expect { TestImplementation.new }.to raise_error(/hello_world\/0/)
+    context "when arity specified" do
+      before { TestImplementation.include(WrongArity) }
+
+      it "displays method name '/' arity" do
+        expect { TestImplementation.new }.to raise_error(/another_method\/1/)
+      end
     end
   end
 end

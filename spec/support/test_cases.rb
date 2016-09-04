@@ -11,3 +11,7 @@ end
 module MissingOneMethod
   def hello_world; end
 end
+
+module AcceptUnlimitedArgs
+  def hello_world; end
+end
