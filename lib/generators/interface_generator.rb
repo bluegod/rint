@@ -35,7 +35,16 @@ class InterfaceGenerator < Thor::Group
   end
 
   def methods
-    args[2..-1].map { |m| ":#{m}" }.join(', ')
+    methods = args[2..-1].map do |m|
+                if m.scan(/\d+/).empty?
+                  ":#{m}"
+                else
+                  m_copy = m.dup
+                  m_copy[":"] = ": " # Create and modify a copy because 'm' is frozen in runtime.
+                  m_copy
+                end
+              end
+    methods.join(", ")
   end
 
   def name
