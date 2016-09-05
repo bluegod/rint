@@ -2,7 +2,7 @@
 
 # Rint (Ruby Interface)
 
-rint provides a way to implement behaviour defined by Interface files, warning when the desired behaviour is missing.
+Rint provides a way to implement behaviour defined by Interface files, warning when the desired behaviour is missing.
 
 ### Example:
 
@@ -12,27 +12,7 @@ module Playable
   include Interface
 
   def initialize
-    must_implement :play, :play_quietly
-  end
-end
-
-require 'playable'
-class Instrument
-  implements Playable
-end
-
-Instrument.new #will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
-```
-
-You can also specify the method's arity:
-
-```ruby
-require 'interface'
-module Playable
-  include Interface
-
-  def initialize
-    must_implement_with_arity({play: 2, play_quietly: 0})
+    must_implement :play, play_quietly: 1
   end
 end
 
@@ -40,12 +20,15 @@ class Instrument
   implements Playable
 end
 
-Instrument.new # will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play/2 for interface Playable
+Instrument.new # will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
 ```
+
+As showed in the example above,`must_implement` allows you enforce the implementation of the methods, specifying the arity (`:play_quietly: 1`) or not (`:play`). When not specified, only the method
+implementation will be checked.
 
 There is also a CLI to generate the interfaces from the command line:
 ```sh
-$ rint c Playable play play_quietly
+$ rint c Playable play play_quietly:1
 ```
 will generate lib/playable.rb (namespaces are also supported).
 
