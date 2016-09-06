@@ -35,7 +35,13 @@ class InterfaceGenerator < Thor::Group
   end
 
   def methods
-    args[2..-1].map { |m| ":#{m}" }.join(', ')
+    args[2..-1].map do |m|
+      if m.scan(/\d+/).empty?
+        ":#{m}"
+      else
+        m.gsub(":", ": ")
+      end
+    end.join(", ")
   end
 
   def name
