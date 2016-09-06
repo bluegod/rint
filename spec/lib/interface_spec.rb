@@ -5,7 +5,6 @@ require 'interface'
 require 'interface/error/not_implemented_error'
 require 'core_ext/module'
 
-=begin
 describe Interface do
   describe '#must_implement' do
     context "when none method implemented" do
@@ -26,7 +25,7 @@ describe Interface do
       before { TestImplementation.include(RightArity) }
 
       it "doesn't raise error" do
-        puts TestImplementation.instance_methods.include? :hello_world
+        # puts TestImplementation.instance_methods.include? :hello_world
         expect{ TestImplementation.new }.not_to raise_error
       end
     end
@@ -59,4 +58,3 @@ describe Interface do
     end
   end
 end
-=end
