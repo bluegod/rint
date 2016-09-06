@@ -1,4 +1,6 @@
-[![Gem Version](https://badge.fury.io/rb/rint.svg)](https://badge.fury.io/rb/rint) [![build status](https://gitlab.com/jameslopez/rint/badges/master/build.svg)](https://gitlab.com/jameslopez/rint/commits/master) [![coverage report](https://gitlab.com/jameslopez/rint/badges/master/coverage.svg)](https://gitlab.com/jameslopez/rint/commits/master)
+[![Gem Version](https://badge.fury.io/rb/rint.svg)](https://badge.fury.io/rb/rint) 
+[![build status](https://gitlab.com/jameslopez/rint/badges/master/build.svg)](https://gitlab.com/jameslopez/rint/commits/master)
+[![coverage report](https://gitlab.com/jameslopez/rint/badges/master/coverage.svg)](https://gitlab.com/jameslopez/rint/commits/master)
 
 # Rint (Ruby Interface)
 
