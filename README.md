@@ -23,8 +23,7 @@ end
 Instrument.new # will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
 ```
 
-As showed in the example above,`must_implement` allows you enforce the implementation of the methods, specifying the arity (`:play_quietly: 1`) or not (`:play`). When not specified, only the method
-implementation will be checked.
+As showed in the example above,`must_implement` allows you enforce the implementation of the methods, specifying the arity. When not specified, only the method implementation will be checked.
 
 There is also a CLI to generate the interfaces from the command line:
 ```sh
