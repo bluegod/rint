@@ -1,4 +1,5 @@
 ## [0.2.0 (unreleased)]
+- Add method arity check to _must_implement_ and refactored specs - @rodrigo-ehresmann
 - Added coverage and build status configuration and badges.
 
 ## [0.1.0]
