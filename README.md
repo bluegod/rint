@@ -2,7 +2,7 @@
 
 # Rint (Ruby Interface)
 
-rint provides a way to implement behaviour defined by Interface files, warning when the desired behaviour is missing.
+Rint provides a way to implement behaviour defined by Interface files, warning when the desired behaviour is missing.
 
 ### Example:
 
@@ -12,21 +12,22 @@ module Playable
   include Interface
 
   def initialize
-    must_implement :play, :play_quietly
+    must_implement :play, play_quietly: 1
   end
 end
 
-require 'playable' 
-class Instrument 
+class Instrument
   implements Playable
 end
 
-Instrument.new #will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
+Instrument.new # will throw: Interface::Error::NotImplementedError: Expected Instrument to implement play for interface Playable
 ```
+
+As showed in the example above,`must_implement` allows you enforce the implementation of the methods, specifying the arity. When not specified, only the method implementation will be checked.
 
 There is also a CLI to generate the interfaces from the command line:
 ```sh
-$ rint c Playable play play_quietly
+$ rint c Playable play play_quietly:1
 ```
 will generate lib/playable.rb (namespaces are also supported).
 
@@ -36,7 +37,7 @@ Add it to your Gemfile:
 
 gem 'rint'
 
-and run 
+and run
 
 ```sh
 $ bundle install
@@ -44,9 +45,9 @@ $ bundle install
 
 ### Goals
 
-Duck typing can be evil if not used correctly. While Ruby applications can get a good level of confidence about issues arisen by duck typing, the fear of a method missing exception or constant changes to a class may lead the developer to use safety checks such as respond_to? or raise Errors when a method is missing. 
+Duck typing can be evil if not used correctly. While Ruby applications can get a good level of confidence about issues arisen by duck typing, the fear of a method missing exception or constant changes to a class may lead the developer to use safety checks such as respond_to? or raise Errors when a method is missing.
 
-This implementation of rint wraps what other static languages use and encapsulates the safety check in a common place, also making explicit the behaviour through the word "implements" and expecting the developer to guess the behaviour of a class without looking at docs or partially implemented code. 
+This implementation of rint wraps what other static languages use and encapsulates the safety check in a common place, also making explicit the behaviour through the word "implements" and expecting the developer to guess the behaviour of a class without looking at docs or partially implemented code.
 
 It also provides a centralised way to implement the interface pattern without having the code throwing an error in a hidden method.
 
