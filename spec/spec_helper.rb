@@ -18,7 +18,10 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 # Add test coverage
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter 'bin/rint'
+  add_filter 'lib/interface/version'
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

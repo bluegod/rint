@@ -11,6 +11,7 @@ module Interface
 
       def error_message(class_name, method_name, method_arity, interface_name)
         arity = method_arity ? "/#{method_arity}" : ""
+
         "Expected #{class_name} to implement #{method_name}#{arity} for interface #{interface_name}"
       end
     end
