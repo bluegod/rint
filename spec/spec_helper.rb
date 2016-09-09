@@ -19,8 +19,23 @@
 # Add test coverage
 require 'simplecov'
 SimpleCov.start do
+  track_files 'lib/**/*.rb'
+
   add_filter 'bin/rint'
   add_filter 'lib/interface/version'
+
+  if ENV['CI_BUILD_NAME']
+    coverage_dir "coverage/#{ENV['CI_BUILD_NAME']}"
+    command_name ENV['CI_BUILD_NAME']
+  end
+
+  if ENV['CI']
+    SimpleCov.at_exit do
+      # In CI environment don't generate formatted reports
+      # Only generate .resultset.json
+      SimpleCov.result
+    end
+  end
 end
 
 RSpec.configure do |config|
