@@ -21,6 +21,7 @@ require 'simplecov'
 SimpleCov.start do
   track_files 'lib/**/*.rb'
 
+  add_filter '/vendor/ruby/'
   add_filter 'bin/rint'
   add_filter 'lib/interface/version'
 end
