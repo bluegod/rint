@@ -6,9 +6,7 @@ module Interface
     # implemented with the wrong arity required by the Interface.
     def must_implement(*args)
       parsed_args(args).each do |method, arity|
-        next if valid_method?(method, arity)
-
-        raise_interface_error(method, arity)
+        raise_interface_error(method, arity) unless valid_method?(method, arity)
       end
     end
 
